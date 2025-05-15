@@ -33,7 +33,7 @@ const Post = ({ post, setCurrentId }) => {
     dispatch(likePost(post._id));
     if (hasLikedPost) {
       console.log("bhisbdvcnsuj");
-      setLikes(post.likes.filter((id) => id != userId));
+      setLikes(post.likes.filter((id) => id !== userId));
     } else {
       console.log("cvsd");
       setLikes([...post.likes, userId]);

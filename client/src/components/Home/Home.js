@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   Container,
   Grow,
@@ -13,10 +13,8 @@ import ChipInput from "material-ui-chip-input";
 import Posts from "../Posts/Posts";
 import Form from "../Form/Form";
 import { useDispatch } from "react-redux";
-//import { useStyles } from "./styles";
 import { getPosts, getPostsBySearch } from "../../actions/posts";
 import Pagination from "../Pagination";
-
 import useStyles from "./styles";
 
 function useQuery() {
@@ -25,7 +23,6 @@ function useQuery() {
 
 const Home = () => {
   const [currentId, setCurrentId] = useState(null);
-  //const classes = useStyles();
   const dispatch = useDispatch();
   const query = useQuery();
   const history = useHistory();
@@ -38,7 +35,6 @@ const Home = () => {
   const searchPost = () => {
     if (search.trim() || tags.length > 0) {
       console.log(tags, "");
-      //dispatch -> fetch search
       dispatch(getPostsBySearch({ search, tags: tags.join(",") }));
       history.push(
         `/posts/search?searchQuery=${search || "none"}&tags=${tags.join(",")}`
@@ -57,7 +53,7 @@ const Home = () => {
   const handleAdd = (tag) => setTags([...tags, tag]);
 
   const handleDelete = (tagToDelete) =>
-    setTags(tags.filter((tag) => tag != tagToDelete));
+    setTags(tags.filter((tag) => tag !== tagToDelete));
 
   return (
     <Grow in>

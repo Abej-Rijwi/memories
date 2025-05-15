@@ -12,7 +12,6 @@ import {
 } from "../constants/actionTypes";
 
 import * as api from "../api";
-import { version } from "react";
 
 // action creators
 export const getPost = (id) => async (dispatch) => {
