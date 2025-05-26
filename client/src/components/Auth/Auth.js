@@ -7,7 +7,8 @@ import {
   Typography,
   Container,
 } from "@material-ui/core";
-import { GoogleLogin } from "react-google-login";
+import { GoogleOAuthProvider, GoogleLogin } from "@react-oauth/google";
+import jwt_decode from "jwt-decode";
 import { useDispatch } from "react-redux";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import useStyles from "./styles";
@@ -51,16 +52,16 @@ const Auth = () => {
     setIsSignUp((prevIsSignUp) => !prevIsSignUp);
     setShowPassword(false);
   };
-  const googelSuccess = async (res) => {
-    const result = res?.profileObj;
-    const token = res?.tokenId;
 
+  // Google Success Handler
+  const googleSuccess = (credentialResponse) => {
     try {
+      const decoded = jwt_decode(credentialResponse.credential);
       dispatch({
         type: AUTH,
         data: {
-          result,
-          token,
+          result: decoded,
+          token: credentialResponse.credential,
         },
       });
       history.push("/");
@@ -68,10 +69,12 @@ const Auth = () => {
       console.log(error);
     }
   };
-  const googleFailure = (error) => {
-    console.log(error);
-    console.log("Google Sign In was unsuccessful. Try Again Later");
+
+  // Google Failure Handler
+  const googleFailure = () => {
+    alert("Google Sign In was unsuccessful. Try Again Later");
   };
+
   return (
     <Container component="main" maxWidth="xs">
       <Paper className={classes.paper} elevation={3}>
@@ -114,7 +117,7 @@ const Auth = () => {
             {isSignUp && (
               <Input
                 name="confirmPassword"
-                label="Repead Password"
+                label="Repeat Password"
                 handleChange={handleChange}
                 type="password"
               />
@@ -130,25 +133,16 @@ const Auth = () => {
           >
             {isSignUp ? "Sign Up" : "Sign In"}
           </Button>
-          <GoogleLogin
-            clientId="56095215645-epdb0ofei7kaqeng9q33e7kdpkje58mq.apps.googleusercontent.com"
-            render={(renderProps) => (
-              <Button
-                className={classes.googleButton}
-                color="primary"
-                fullWidth
-                onClick={renderProps.onClick}
-                disabled={renderProps.disabled}
-                startIcon={<Icon />}
-                variant="contained"
-              >
-                Google Sign In
-              </Button>
-            )}
-            onSuccess={googelSuccess}
-            onFailure={googleFailure}
-            // cookiePolicy="single_host_origin"
-          />
+          <GoogleOAuthProvider clientId="56095215645-epdb0ofei7kaqeng9q33e7kdpkje58mq.apps.googleusercontent.com">
+            <GoogleLogin
+              onSuccess={googleSuccess}
+              onError={googleFailure}
+              width="100%"
+              shape="rectangular"
+              text="signin_with"
+              logo_alignment="left"
+            />
+          </GoogleOAuthProvider>
           <Grid container justifyContent="flex-end">
             <Grid item>
               <Button onClick={switchMode}>
