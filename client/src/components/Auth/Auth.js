@@ -7,13 +7,13 @@ import {
   Typography,
   Container,
 } from "@material-ui/core";
-import { GoogleOAuthProvider, GoogleLogin } from "@react-oauth/google";
+import { GoogleOAuthProvider, useGoogleLogin } from "@react-oauth/google";
 import jwt_decode from "jwt-decode";
 import { useDispatch } from "react-redux";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import useStyles from "./styles";
 import Input from "./input";
-import Icon from "./icon";
+import Icon from "./icon"; // Optional: your Google icon component
 import { AUTH } from "../../constants/actionTypes";
 import { useHistory } from "react-router-dom";
 import { signin, signup } from "../../actions/auth";
@@ -54,14 +54,14 @@ const Auth = () => {
   };
 
   // Google Success Handler
-  const googleSuccess = (credentialResponse) => {
+  const googleSuccess = (tokenResponse) => {
     try {
-      const decoded = jwt_decode(credentialResponse.credential);
+      const decoded = jwt_decode(tokenResponse.credential);
       dispatch({
         type: AUTH,
         data: {
           result: decoded,
-          token: credentialResponse.credential,
+          token: tokenResponse.credential,
         },
       });
       history.push("/");
@@ -74,6 +74,13 @@ const Auth = () => {
   const googleFailure = () => {
     alert("Google Sign In was unsuccessful. Try Again Later");
   };
+
+  // useGoogleLogin hook for custom button
+  const login = useGoogleLogin({
+    onSuccess: googleSuccess,
+    onError: googleFailure,
+    flow: "implicit", // use "auth-code" if you need a code for backend
+  });
 
   return (
     <Container component="main" maxWidth="xs">
@@ -134,15 +141,15 @@ const Auth = () => {
             {isSignUp ? "Sign Up" : "Sign In"}
           </Button>
           <GoogleOAuthProvider clientId="56095215645-epdb0ofei7kaqeng9q33e7kdpkje58mq.apps.googleusercontent.com">
-            <GoogleLogin
-              onSuccess={googleSuccess}
-              onError={googleFailure}
-              width="100%"
-              shape="rectangular"
-              text="signin_with"
-              logo_alignment="left"
+            <Button
+              fullWidth
+              variant="contained"
               className={classes.googleButton}
-            />
+              onClick={login}
+              startIcon={<Icon />} // Optional: Google icon
+            >
+              Sign in with Google
+            </Button>
           </GoogleOAuthProvider>
           <Grid container justifyContent="flex-end">
             <Grid item>
