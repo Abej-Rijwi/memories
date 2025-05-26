@@ -141,6 +141,7 @@ const Auth = () => {
               shape="rectangular"
               text="signin_with"
               logo_alignment="left"
+              className={classes.googleButton}
             />
           </GoogleOAuthProvider>
           <Grid container justifyContent="flex-end">

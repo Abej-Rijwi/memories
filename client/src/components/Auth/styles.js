@@ -26,5 +26,17 @@ export default makeStyles((theme) => ({
   },
   googleButton: {
     marginBottom: theme.spacing(2),
+    width: "100%",
+    backgroundColor: "#2196f3 !important", // Sky blue
+    color: "#fff !important",
+    borderRadius: 4,
+    fontWeight: "bold",
+    textTransform: "none",
+    fontSize: "1rem",
+    boxShadow: "none",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    padding: "8px 0",
   },
 }));
