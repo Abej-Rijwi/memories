@@ -70,7 +70,7 @@ const Auth = () => {
   };
   const googleFailure = (error) => {
     console.log(error);
-    console.log("Google Sign In was Successfull. Try Again Later");
+    console.log("Google Sign In was unsuccessful. Try Again Later");
   };
   return (
     <Container component="main" maxWidth="xs">
@@ -147,7 +147,7 @@ const Auth = () => {
             )}
             onSuccess={googelSuccess}
             onFailure={googleFailure}
-            cookiePolicy="single_host_origin"
+            // cookiePolicy="single_host_origin"
           />
           <Grid container justifyContent="flex-end">
             <Grid item>
