@@ -12,7 +12,7 @@
   </div>
   <h3 align="center">A Memories Application</h3>
    <div align="center">
-     Build this project step by step with our detailed tutorial on <a href="https://youtu.be/KzpOabCuqrM" target="_blank"><b>JavaScript Tutorial</b></a> YouTube. Join the JST family!
+     Build this project step by step with our detailed tutorial on <a href="https://www.youtube.com/channel/UChz-VlXINivlDUpeOz9v5kg" target="_blank"><b>JavaScript Tutorial</b></a> YouTube. Join the JST family!
     </div>
 </div>
 
