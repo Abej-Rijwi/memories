@@ -100,7 +100,7 @@ Create a new file named `.env` in the root of your project and add the following
 
 ```env
 PORT = 5000
-CONNECTION_URL = mongodb+srv://abejrijwi:career-123456@cluster0.ttay5.mongodb.net/MemoriesApplication?retryWrites=true&w=majority
+CONNECTION_URL = 
 ```
 
 Replace the placeholder values with your actual credentials. You can obtain these credentials by Yourself.
